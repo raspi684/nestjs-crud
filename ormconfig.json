@@ -1,0 +1,24 @@
+{
+   "type": "mysql",
+   "host": "localhost",
+   "port": 3306,
+   "username": "root",
+   "password": "",
+   "database": "nest",
+   "synchronize": false,
+   "logging": false,
+   "entities": [
+      "dist/entity/*{.ts,.js}"
+   ],
+   "migrations": [
+      "dist/migration/*{.ts,.js}"
+   ],
+   "subscribers": [
+      "dist/subscriber/*{.ts,.js}"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}

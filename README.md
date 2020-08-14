@@ -59,6 +59,21 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+## DB
+```bash
+# Entities need to be in dist directory before generating migrations, also migrations must be in dist before migrating/reverting
+$ nest build
+
+# generate migration
+$ npm run typeorm migration:generate -- -n MigrationName
+
+# run migrations
+$ npm run typeorm migration:run
+
+# revert migrations
+$ npm run typeorm migration:revert
+
+```
 
 ## Support
 

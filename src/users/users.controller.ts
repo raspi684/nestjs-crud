@@ -9,7 +9,7 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { UserDto } from './dto/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -29,13 +29,13 @@ export class UsersController {
 
   // POST /users
   @Post()
-  async store(@Body() data: CreateUserDto) {
+  async store(@Body() data: UserDto) {
     return this.usersService.store(data);
   }
 
   // PUT /users/:id
   @Put(':id')
-  async update(@Param('id') id: string, @Body() data: CreateUserDto) {
+  async update(@Param('id') id: string, @Body() data: UserDto) {
     return this.usersService.update(id, data);
   }
 
