@@ -2,6 +2,8 @@ import {
   Injectable,
   NotFoundException,
   InternalServerErrorException,
+  BadRequestException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -26,8 +28,20 @@ export class UsersService {
       throw new NotFoundException();
     }
   }
+  
+  async findOneByUsername(email: string) {
+    try {
+      const user = await this.usersRepository.findOneOrFail({email});
+      return user;
+    } catch (e) {
+      return null;
+    }
+  }
 
-  store(data: UserDto): Promise<User> {
+  async store(data: UserDto): Promise<User> {
+    if( (await this.usersRepository.findAndCount({email: data.email})).length > 0 ) {
+      throw new UnprocessableEntityException('User already exists');
+    }
     try {
       const user = new User();
       user.name = data.name;
@@ -53,9 +67,9 @@ export class UsersService {
   async destroy(id: string) {
     try {
       await this.usersRepository.delete(id);
+      return;
     } catch (e) {
       throw new NotFoundException(e);
     }
-    return;
   }
 }
