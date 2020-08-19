@@ -2,13 +2,13 @@ import {
   Injectable,
   NotFoundException,
   InternalServerErrorException,
-  BadRequestException,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '@/entity/User';
 import { UserDto } from './dto/user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -39,13 +39,14 @@ export class UsersService {
   }
 
   async store(data: UserDto): Promise<User> {
-    if( (await this.usersRepository.findAndCount({email: data.email})).length > 0 ) {
+    if( (await this.usersRepository.findAndCount({email: data.email}))[1] > 0 ) {
       throw new UnprocessableEntityException('User already exists');
     }
     try {
       const user = new User();
       user.name = data.name;
       user.email = data.email;
+      user.password = await bcrypt.hash(data.password, await bcrypt.genSalt(10));
 
       return this.usersRepository.save(user);
     } catch (e) {
