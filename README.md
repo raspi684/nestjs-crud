@@ -51,13 +51,13 @@ $ npm run test:cov
 $ nest build
 
 # generate migration
-$ npm run typeorm migration:generate -- -n MigrationName
+$ node_modules/.bin/typeorm migration:generate -- -n MigrationName
 
 # run migrations
-$ npm run typeorm migration:run
+$ node_modules/.bin/typeorm migration:run
 
 # revert migrations
-$ npm run typeorm migration:revert
+$ node_modules/.bin/typeorm migration:revert
 
 ```
 

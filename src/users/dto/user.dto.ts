@@ -6,7 +6,7 @@ export class UserDto {
 
   @IsNotEmpty()
   name: string;
-  
+
   @IsNotEmpty()
   @Min(6)
   password: string;
